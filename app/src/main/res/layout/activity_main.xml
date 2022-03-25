@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:src="@drawable/logo_hannam"></ImageView>
+
+    <EditText
+        android:id="@+id/inputID"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/logo"
+        android:drawableStart="@drawable/user_resize"
+        android:drawablePadding="15dp"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"></EditText>
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/inputID"
+        android:drawableStart="@drawable/lock_resize"
+        android:drawablePadding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"></EditText>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/inputPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="LOGIN" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btn_login"></TextView>
+
+</RelativeLayout>
