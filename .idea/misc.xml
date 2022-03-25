@@ -7,7 +7,10 @@
         <entry key="..\:/Users/hero2/android_project1/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/hero2/android_project1/app/src/main/res/drawable/lock_resize.xml" value="0.1" />
         <entry key="..\:/Users/hero2/android_project1/app/src/main/res/drawable/user_resize.xml" value="0.1" />
-        <entry key="..\:/Users/hero2/android_project1/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/hero2/android_project1/app/src/main/res/layout/activity_main.xml" value="0.16753926701570682" />
+        <entry key="..\:/Users/hero2/android_project1/app/src/main/res/layout/activity_receive_msg.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/hero2/android_project1/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
+        <entry key="..\:/Users/hero2/android_project1/app/src/main/res/layout/newmessage.xml" value="0.16666666666666666" />
       </map>
     </option>
   </component>

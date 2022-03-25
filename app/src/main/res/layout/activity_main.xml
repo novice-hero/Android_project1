@@ -10,6 +10,7 @@
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:src="@drawable/logo_hannam"></ImageView>
@@ -22,31 +23,39 @@
         android:drawableStart="@drawable/user_resize"
         android:drawablePadding="15dp"
         android:layout_marginTop="70dp"
+        android:hint="ID"
         android:layout_centerHorizontal="true"></EditText>
     <EditText
-        android:id="@+id/inputPassword"
+        android:id="@+id/inputPW"
         android:layout_width="330dp"
         android:layout_height="50dp"
         android:layout_below="@id/inputID"
         android:drawableStart="@drawable/lock_resize"
         android:drawablePadding="15dp"
         android:layout_marginTop="10dp"
+        android:hint="PW"
         android:layout_centerHorizontal="true"></EditText>
 
     <Button
         android:id="@+id/btn_login"
+        android:onClick="login"
         android:layout_width="330dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/inputPassword"
+        android:layout_below="@+id/inputPW"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
+        android:background="@color/hannam"
+        android:textColor="@color/white"
         android:text="LOGIN" />
+
     <TextView
+        android:id="@+id/tv_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SIGN UP"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/btn_login"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/btn_login"></TextView>
+        android:layout_marginTop="10dp"
+        android:onClick="signup_main"
+        android:text="SIGN UP"></TextView>
 
 </RelativeLayout>
