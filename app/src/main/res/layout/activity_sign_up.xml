@@ -39,7 +39,7 @@
         android:background="@color/hannam"
         android:textColor="@color/white"
         android:text="CHECK"
-        android:onClick="checkID"
+        android:onClick="onClick"
         android:layout_toRightOf="@+id/signup_inputID"
         android:layout_above="@+id/signup_inputPW"></Button>
     <EditText
@@ -72,7 +72,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:background="@color/hannam"
-        android:onClick="signUp"
+        android:onClick="onClick"
         android:text="가입"
         android:textColor="@color/white"></Button>
 
