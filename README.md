@@ -1,6 +1,6 @@
 ## 한남대학교 안드로이드 응용 실습 프로젝트
 
-### Project 1 - 22-03-25~26
+### SQLite를 활용한 메신저 앱 개발
 
 <br>
 
@@ -43,7 +43,7 @@
 
 <br>
 
-#### 
+#### User Info Setting
 <img src="https://user-images.githubusercontent.com/77836614/167290065-d43d9dc5-fd40-405d-a700-0e4f45370583.png" width="20%" height="25%">
 
 - 사용자 정보 변경 화면
