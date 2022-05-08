@@ -10,8 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android_project1">
         <activity
-            android:name=".ReceiveMsgActivity"
+            android:name=".MessageActivity"
             android:exported="false" />
+        <activity
+            android:name=".NavActivity"
+            android:exported="false"
+            android:label="@string/title_activity_nav"
+            android:theme="@style/Theme.Android_project1.NoActionBar" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />

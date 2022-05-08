@@ -1,51 +1,66 @@
 package kr.hnu.android_project1;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 public class MainActivity extends AppCompatActivity {
+    DBHelper dbHelper;
+    SQLiteDatabase readableDB, writableDB;
+    String userID; // 내비게이션 액티비티로 로그인한 유저 아이디를 전달해줄 변수
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        dbHelper = new DBHelper(this);
+        readableDB = dbHelper.getReadableDatabase();
+        writableDB = dbHelper.getWritableDatabase();
+        userID = "";
     }
 
     public void login(View v) {
-//        EditText inputid = (EditText) findViewById(R.id.inputID);
-//        EditText inputpw = (EditText) findViewById(R.id.inputPW);
-//        if (id == null & pw == null) {
-//            // id와 pw가 없다면 없다고 toast 메시지 생성
-//            Toast.makeText(MainActivity.this, "id와 pw가 없습니다.", Toast.LENGTH_SHORT).show();
-//        }
-//        else if (inputid.getText().toString().equals(id) & inputpw.getText().toString().equals(pw)) {
-//            // id와 pw가 확인되면 메시지 함으로 이동 (받아올 데이터가 없으므로 startActivity)
-//            Intent intent2 = new Intent(this, ReceiveMsgActivity.class);
-//            startActivity(intent2);
-//        }
-//        else if (inputid.getText().toString() != id | inputpw.getText().toString() != pw) {
-//            // id 또는 pw가 다르면 잘못 입력되었다고 toast 메시지 생성
-//            Toast.makeText(MainActivity.this, "id 또는 pw가 잘못 입력되었습니다.", Toast.LENGTH_SHORT).show();
-//        }
+        EditText inputid = findViewById(R.id.inputID);
+        EditText inputpw = findViewById(R.id.inputPW);
+        
+        Cursor cursor = readableDB.rawQuery("SELECT id, password FROM users", null);
+        String inputIdTemp = inputid.getText().toString(); // 로그인 화면 id, pw 저장 변수
+        String inputPwTemp = inputpw.getText().toString();
+        String tempId = ""; // db에 저장된 id, pw를 입력한 id, pw와 같으면 저장할 변수
+        String tempPw = "";
+
+        while (cursor.moveToNext()) {
+            String id = cursor.getString(0);
+            String pw = cursor.getString(1);
+            if (id.equals(inputIdTemp) & pw.equals(inputPwTemp)) {
+                tempId = id;
+                tempPw = pw;
+            }
+        }
+        if (inputIdTemp.equals("") | inputPwTemp.equals("")) {
+            Toast.makeText(MainActivity.this, "ID 또는 Password를 입력하세요.", Toast.LENGTH_SHORT).show();
+        }
+        else if (inputIdTemp.equals(tempId) & inputPwTemp.equals(tempPw)) {
+            Toast.makeText(MainActivity.this, "환영합니다!", Toast.LENGTH_SHORT).show();
+            userID = tempId; // 로그인한 유저의 아이디를 저장해서 인텐트를 사용해서 다음 액티비티로 넘겨줌
+            Intent intent2 = new Intent(this, NavActivity.class);
+            intent2.putExtra("login", userID);
+            startActivity(intent2);
+        }
+        else if (inputid.getText().toString() != tempId | inputpw.getText().toString() != tempPw) {
+            Toast.makeText(MainActivity.this, "ID 또는 Password가 잘못 입력되었습니다.", Toast.LENGTH_SHORT).show();
+        }
+        cursor.close();
     }
 
-    public void signup_main(View v) {
+    public void signup_main(View v) { // 계정 생성 화면으로 넘어감
         Intent intent = new Intent(this, SignUpActivity.class);
-        intent.putExtra("PersonIn", "");
         startActivity(intent);
-    }
-
-    void init() {
-
     }
 }
