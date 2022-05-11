@@ -14,6 +14,7 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         Intent intent = getIntent(); // 인텐트를 받아서 정보를 각각 저장
+
         String sender = intent.getExtras().getString("sender");
         String receiver = intent.getExtras().getString("receiver");
         String title = intent.getExtras().getString("title");

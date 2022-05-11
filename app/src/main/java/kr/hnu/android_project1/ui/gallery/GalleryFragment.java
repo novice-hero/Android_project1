@@ -54,9 +54,9 @@ public class GalleryFragment extends Fragment {
     private void setListFromDB() {
         arrayList.clear();
         cursor = messageDBHelper.getCursorMsg(); // 메시지 DB의 테이블을 선택함
-        while (cursor.moveToNext()) { // 커서가 없을때까지
+        while (cursor.moveToNext()) {
             if (cursor.getString(cursor.getColumnIndexOrThrow("receiver")).equals(userID)){
-                // 로그인한 유저의 id와 받는이가 동일할 경우에 어레이리스트에 데이터들을 추가함
+                // 로그인한 유저의 id와 message 테이블의 받는이가 동일할 경우에 어레이리스트에 데이터들을 추가함
                 arrayList.add(new Messages(cursor.getString(cursor.getColumnIndexOrThrow("sender")),
                         cursor.getString(cursor.getColumnIndexOrThrow("receiver")),
                         cursor.getString(cursor.getColumnIndexOrThrow("title")),

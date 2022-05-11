@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         readableDB = dbHelper.getReadableDatabase();
         writableDB = dbHelper.getWritableDatabase();
-        userID = "";
+        userID = ""; // 로그인 화면이 실행될 때 마다 초기화
     }
 
     public void login(View v) {
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         EditText inputpw = findViewById(R.id.inputPW);
         
         Cursor cursor = readableDB.rawQuery("SELECT id, password FROM users", null);
-        String inputIdTemp = inputid.getText().toString(); // 로그인 화면 id, pw 저장 변수
+        String inputIdTemp = inputid.getText().toString(); // 로그인 할 id, pw를 저장할 변수
         String inputPwTemp = inputpw.getText().toString();
         String tempId = ""; // db에 저장된 id, pw를 입력한 id, pw와 같으면 저장할 변수
         String tempPw = "";
@@ -38,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             String id = cursor.getString(0);
             String pw = cursor.getString(1);
-            if (id.equals(inputIdTemp) & pw.equals(inputPwTemp)) {
+            if (id.equals(inputIdTemp) & pw.equals(inputPwTemp)) { 
+                // users 테이블에서 입력된 id,pw와 같은 데이터를 찾았다면 변수에 저장
                 tempId = id;
                 tempPw = pw;
             }
         }
+        // 로그인 확인
         if (inputIdTemp.equals("") | inputPwTemp.equals("")) {
             Toast.makeText(MainActivity.this, "ID 또는 Password를 입력하세요.", Toast.LENGTH_SHORT).show();
         }

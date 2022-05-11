@@ -65,7 +65,7 @@ public class SlideshowFragment extends Fragment {
                 row.put("password", tempPw);
                 row.put("name", tempName);
 
-                // 텍스트뷰에 있는 아이디와 같은 줄의 데이터 중 pw, name 업데이트
+                // 현재 접속한 아이디의 pw, name 업데이트
                 writableDB.update("users", row, "id="+tempId, null);
                 Toast.makeText(getActivity(), "변경이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
