@@ -20,7 +20,7 @@ public class MessageDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS message");
         onCreate(db);
     }
-    public Cursor getCursorForTB_Contacts() {
+    public Cursor getCursorMsg() {
         String selectQuery = "SELECT sender, receiver, title, content, date FROM message order by _id desc";
         // 최신 메시지가 제일 위로 나오게 데이터를 _id 기준으로 내림차순 정렬
         return readableDB.rawQuery(selectQuery, null);
