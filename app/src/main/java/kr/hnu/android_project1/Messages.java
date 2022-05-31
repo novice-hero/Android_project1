@@ -5,14 +5,14 @@ public class Messages {
     String receiver;
     String title;
     String content;
-    String date;
+    String sendDate;
 
-    public Messages(String sender, String receiver, String title, String content, String date) {
+    public Messages(String sender, String receiver, String title, String content, String sendDate) {
         this.sender = sender;
         this.receiver = receiver;
         this.title = title;
         this.content = content;
-        this.date = date;
+        this.sendDate = sendDate;
     }
     public String getSender() {
         return sender;
@@ -26,5 +26,5 @@ public class Messages {
     public String getContent() {
         return content;
     }
-    public String getDate() { return date; }
+    public String getSendDate() { return sendDate; }
 }

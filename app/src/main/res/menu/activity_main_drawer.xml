@@ -5,20 +5,24 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_write"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_create"
-            android:title="@string/menu_write" />
+            android:title="메시지 작성" />
         <item
-            android:id="@+id/nav_receive"
+            android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_message"
-            android:title="@string/menu_receive" />
+            android:title="받은 메시지 함" />
         <item
-            android:id="@+id/nav_info"
+            android:id="@+id/nav_write"
+            android:icon="@drawable/ic_send_24"
+            android:title="보낸 메시지 함" />
+        <item
+            android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_settings"
-            android:title="@string/menu_info" />
+            android:title="개인 정보 설정" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_exit_to_app"
-            android:title="@string/menu_logout" />
+            android:title="로그아웃" />
     </group>
 </menu>

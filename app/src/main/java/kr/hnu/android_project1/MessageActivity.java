@@ -18,8 +18,8 @@ public class MessageActivity extends AppCompatActivity {
         String sender = intent.getExtras().getString("sender");
         String receiver = intent.getExtras().getString("receiver");
         String title = intent.getExtras().getString("title");
-        String date = intent.getExtras().getString("date");
         String content = intent.getExtras().getString("content");
+        String sendDate = intent.getExtras().getString("sendDate");
 
         TextView tv_sender = findViewById(R.id.tv_sender_empty);
         TextView tv_receiver = findViewById(R.id.tv_receiver_empty);
@@ -30,7 +30,7 @@ public class MessageActivity extends AppCompatActivity {
         tv_sender.setText(sender);
         tv_receiver.setText(receiver);
         tv_title.setText(title);
-        tv_date.setText(date);
+        tv_date.setText(sendDate);
         tv_content.setText(content);
     }
 }

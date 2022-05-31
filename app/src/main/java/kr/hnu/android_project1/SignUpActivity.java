@@ -2,64 +2,145 @@ package kr.hnu.android_project1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class SignUpActivity extends AppCompatActivity {
-    EditText editId, editPw, editName; // edittext 변수들 생성
-    DBHelper dbHelper;
-    SQLiteDatabase readableDB, writableDB;
+    private EditText editId, editPw, editName;
+    private Button buttonCheck;
+    private Spinner spinner;
+    private String departmentName;
+    private AlertDialog dialog;
+    private boolean validate = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-        // 각 edittext 변수들 마다 id 찾아서 배정
         editId = findViewById(R.id.signup_inputID);
         editPw = findViewById(R.id.signup_inputPW);
         editName = findViewById(R.id.signup_inputName);
+        buttonCheck = findViewById(R.id.signup_btn_check);
+        spinner = findViewById(R.id.signup_department);
 
-        dbHelper = new DBHelper(this);
-        readableDB = dbHelper.getReadableDatabase();
-        writableDB = dbHelper.getWritableDatabase();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.department_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                departmentName = (String) spinner.getItemAtPosition(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
     }
 
-    public void onClick(View v) {
-        ContentValues row;
-        switch (v.getId()) {
-            case R.id.signup_btn_check: // ID 중복 확인 버튼
-                Cursor cursor = readableDB.rawQuery("SELECT id FROM users", null);
-                String temp = "abc";
-                String editIdTemp = editId.getText().toString();
-                while (cursor.moveToNext()) {
-                    String id = cursor.getString(0); // id 저장
-                    if (id.equals(editIdTemp)) temp = id; // 입력한 id와 저장되어있는 id 중 같은게 있다면 저장
+    public void onClickCheck(View v) {
+        String userID = editId.getText().toString();
+        if (userID.equals("")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+            dialog = builder.setMessage("ID is empty.").setNegativeButton("Retry", null).create();
+            dialog.show();
+            return;
+        }
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean isSuccess = jsonResponse.getBoolean("success");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+                    if (isSuccess) {
+                        dialog = builder.setMessage("Good ID").setPositiveButton("OK", null).create();
+                        dialog.show();
+                        editId.setEnabled(false);
+                        buttonCheck.setEnabled(false);
+                        validate = true;
+                    } else {
+                        dialog = builder.setMessage("ID is already used").setNegativeButton("Retry", null).create();
+                        dialog.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                if (editIdTemp.length() == 0) // 아무것도 입력 안했으면
-                    Toast.makeText(SignUpActivity.this, "ID를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                else if (editIdTemp.equals(temp)) // 중복이라면
-                    Toast.makeText(SignUpActivity.this, "이미 존재하는 ID 입니다.", Toast.LENGTH_SHORT).show();
-                else // 사용가능
-                    Toast.makeText(SignUpActivity.this, "사용 가능한 ID 입니다.", Toast.LENGTH_SHORT).show();
-                cursor.close();
-                break;
-
-            case R.id.signup_btn_signup: // 생성 버튼
-                row = new ContentValues();
-                row.put("id", editId.getText().toString());
-                row.put("password", editPw.getText().toString());
-                row.put("name", editName.getText().toString());
-                writableDB.insert("users", null, row);
-                Toast.makeText(SignUpActivity.this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                finish();
-                break;
+            }
+        };
+        ValidateRequest validateRequest = new ValidateRequest(userID, responseListener);
+        RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+        requestQueue.add(validateRequest);
+    }
+    public void onClickRegister(View v) {
+        if (!validate) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+            dialog = builder.setMessage("Press Check").setNegativeButton("Retry", null).create();
+            dialog.show();
+            return;
+        }
+        String userID = editId.getText().toString();
+        String userPassword = editPw.getText().toString();
+        String userName = editName.getText().toString();
+        String userDepartment = spinner.getSelectedItem().toString();
+        if (userID.equals("") | userPassword.equals("") | userDepartment.equals("") | userName.equals("")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+            dialog = builder.setMessage("Field is empty.").setNegativeButton("Retry", null).create();
+            dialog.show();
+            return;
+        }
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean isSuccess = jsonResponse.getBoolean("success");
+                    if (isSuccess) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+                        dialog = builder.setMessage("Created.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        }).create();
+                        dialog.show();
+                    } else {
+                        Log.e("SignUpActivity", "register failed");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        RegisterRequest registerRequest = new RegisterRequest(userID, userPassword, userName, userDepartment, responseListener);
+        RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+        requestQueue.add(registerRequest);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
         }
     }
 }

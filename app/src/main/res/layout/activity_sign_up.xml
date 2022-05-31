@@ -32,16 +32,17 @@
         android:layout_marginTop="70dp"
         android:layout_marginLeft="41dp"
         android:hint="ID"></EditText>
+
     <Button
         android:id="@+id/signup_btn_check"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:background="@color/hannam"
-        android:textColor="@color/white"
-        android:text="CHECK"
-        android:onClick="onClick"
+        android:layout_above="@+id/signup_inputPW"
         android:layout_toRightOf="@+id/signup_inputID"
-        android:layout_above="@+id/signup_inputPW"></Button>
+        android:background="@color/hannam"
+        android:onClick="onClickCheck"
+        android:text="CHECK"
+        android:textColor="@color/white"></Button>
     <EditText
         android:id="@+id/signup_inputPW"
         android:layout_width="330dp"
@@ -63,6 +64,12 @@
         android:drawableStart="@drawable/user_name_resize"
         android:drawablePadding="15dp"
         android:hint="Name"></EditText>
+    <Spinner
+        android:id="@+id/signup_department"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/signup_inputName"
+        android:layout_width="330dp"
+        android:layout_height="50dp" />
 
     <Button
         android:id="@+id/signup_btn_signup"
@@ -72,7 +79,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:background="@color/hannam"
-        android:onClick="onClick"
+        android:onClick="onClickRegister"
         android:text="가입"
         android:textColor="@color/white"></Button>
 

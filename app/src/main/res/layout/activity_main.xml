@@ -48,7 +48,7 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:onClick="login"
+        android:onClick="onClickLogin"
         android:layout_width="330dp"
         android:layout_height="50dp"
         android:layout_below="@+id/inputPW"
@@ -65,7 +65,7 @@
         android:layout_below="@+id/btn_login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:onClick="signup_main"
+        android:onClick="moveSignUp"
         android:text="SIGN UP"></TextView>
 
 </RelativeLayout>

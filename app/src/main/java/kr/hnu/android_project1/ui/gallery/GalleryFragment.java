@@ -1,10 +1,12 @@
 package kr.hnu.android_project1.ui.gallery;
 
-import static kr.hnu.android_project1.NavActivity.userID;
+import static kr.hnu.android_project1.MainActivity.loginID;
 
+import android.app.AlertDialog;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
-import kr.hnu.android_project1.MessageDBHelper;
 import kr.hnu.android_project1.Messages;
 import kr.hnu.android_project1.MyRecyclerViewAdapter;
 import kr.hnu.android_project1.databinding.FragmentGalleryBinding;
@@ -26,48 +35,83 @@ import kr.hnu.android_project1.databinding.FragmentGalleryBinding;
 public class GalleryFragment extends Fragment {
     // 받은 메시지 함
     private FragmentGalleryBinding binding;
-    MessageDBHelper messageDBHelper;
-    SQLiteDatabase readableDB, writableDB;
-    ArrayList<Messages> arrayList;
+    ArrayList<Messages> messageList;
     MyRecyclerViewAdapter adapter;
-    Cursor cursor;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        messageDBHelper = new MessageDBHelper(getActivity());
-        readableDB = messageDBHelper.getReadableDatabase();
-        writableDB = messageDBHelper.getWritableDatabase();
-
         RecyclerView recyclerView = binding.receiveRecycler;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<>();
-        adapter = new MyRecyclerViewAdapter(arrayList);
+        messageList = new ArrayList<>();
+        adapter = new MyRecyclerViewAdapter(messageList);
         recyclerView.setAdapter(adapter);
-        setListFromDB();
+        new BackgroundTask().execute();
 
         return root;
     }
+    class BackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL(target);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
-    private void setListFromDB() {
-        arrayList.clear();
-        cursor = messageDBHelper.getCursorMsg(); // 메시지 DB의 테이블을 선택함
-        while (cursor.moveToNext()) {
-            if (cursor.getString(cursor.getColumnIndexOrThrow("receiver")).equals(userID)){
-                // 로그인한 유저의 id와 message 테이블의 받는이가 동일할 경우에 어레이리스트에 데이터들을 추가함
-                arrayList.add(new Messages(cursor.getString(cursor.getColumnIndexOrThrow("sender")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("receiver")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("title")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("content")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("date"))));
+        @Override
+        protected void onPreExecute() {
+            try {
+                target = "http://highero10.dothome.co.kr/AndroidProject/ReceiveMessageList.php?receiver=" + loginID;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        cursor.close();
-        adapter.notifyDataSetChanged(); // 정보가 변했다고 알려줌
-    }
 
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                messageList.clear();
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray = jsonObject.getJSONArray("response");
+                String sender, receiver, title, content, sendDate;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject row = jsonArray.getJSONObject(i);
+                    sender = row.getString("sender");
+                    receiver = row.getString("receiver");
+                    title = row.getString("title");
+                    content = row.getString("content");
+                    sendDate = row.getString("sendDate");
+                    Messages messages = new Messages(sender, receiver, title, content, sendDate);
+                    messageList.add(messages);
+                }
+                adapter.notifyDataSetChanged();
+                if (jsonArray.length() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GalleryFragment.this.getContext());
+                    builder.setMessage("받은 메시지가 없습니다.").setNegativeButton("확인", null).create().show();
+                }
+            } catch (Exception e) {
+                Log.e("Error: ", s);
+                e.printStackTrace();
+            }
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

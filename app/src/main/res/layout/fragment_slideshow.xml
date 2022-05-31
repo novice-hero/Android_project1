@@ -32,7 +32,6 @@
         android:layout_marginTop="5dp"
         android:hint="신규 암호"
         android:layout_centerHorizontal="true"></EditText>
-
     <EditText
         android:id="@+id/info_inputName"
         android:layout_width="330dp"
@@ -43,7 +42,12 @@
         android:drawableStart="@drawable/user_name_resize"
         android:drawablePadding="15dp"
         android:hint="신규 이름"></EditText>
-
+    <Spinner
+        android:id="@+id/info_department"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/info_inputName"
+        android:layout_width="330dp"
+        android:layout_height="50dp" />
     <Button
         android:id="@+id/info_btn_change"
         android:layout_width="330dp"

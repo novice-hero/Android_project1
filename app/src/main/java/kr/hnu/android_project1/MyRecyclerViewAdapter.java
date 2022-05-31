@@ -21,7 +21,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.newmessage, parent, false);
-        // newmessage.xml 가져와서 뷰홀더에 넣기
         return new MyViewHolder(itemView);
     }
 
@@ -52,7 +51,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     String receiver = arrayList.get(getAdapterPosition()).getReceiver();
                     String title = arrayList.get(getAdapterPosition()).getTitle();
                     String content = arrayList.get(getAdapterPosition()).getContent();
-                    String date = arrayList.get(getAdapterPosition()).getDate();
+                    String sendDate = arrayList.get(getAdapterPosition()).getSendDate();
 
                     // 인텐트로 각 정보를 저장해서 MessageActivity로 보내고
                     Intent intent = new Intent(v.getContext(), MessageActivity.class);
@@ -60,7 +59,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     intent.putExtra("receiver",receiver);
                     intent.putExtra("title",title);
                     intent.putExtra("content",content);
-                    intent.putExtra("date",date);
+                    intent.putExtra("sendDate",sendDate);
                     // MessageActivity 열기
                     v.getContext().startActivity(intent);
                 }
@@ -69,7 +68,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         public void setItem(Messages msg) {
             sender.setText(msg.getSender());
             title.setText(msg.getTitle());
-            date.setText(msg.getDate());
+            date.setText(msg.getSendDate());
         }
     }
 }
