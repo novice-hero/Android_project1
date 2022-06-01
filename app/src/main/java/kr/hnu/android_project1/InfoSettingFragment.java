@@ -29,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import kr.hnu.android_project1.databinding.FragmentInfoSettingBinding;
-import kr.hnu.android_project1.databinding.FragmentSlideshowBinding;
 
 public class InfoSettingFragment extends Fragment {
     private FragmentInfoSettingBinding binding;

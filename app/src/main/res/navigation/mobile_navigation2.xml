@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_receive_message" />
 
     <fragment
+        android:id="@+id/nav_send_message"
+        android:name="kr.hnu.android_project1.SendMessageFragment"
+        android:label="보낸 메시지 함"
+        tools:layout="@layout/fragment_send_message" />
+
+    <fragment
         android:id="@+id/nav_info_setting"
         android:name="kr.hnu.android_project1.InfoSettingFragment"
         android:label="개인 정보 설정"
@@ -26,6 +32,6 @@
     <fragment
         android:id="@+id/nav_logout"
         android:name="kr.hnu.android_project1.LogoutFragment"
-        android:label="개인 정보 설정"
+        android:label="로그아웃"
         tools:layout="@layout/fragment_logout" />
 </navigation>
