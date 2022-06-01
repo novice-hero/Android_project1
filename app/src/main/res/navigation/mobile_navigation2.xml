@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation2"
-    app:startDestination="@+id/nav_gallery">
+    app:startDestination="@+id/nav_receive_message">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="kr.hnu.android_project1.ui.home.HomeFragment"
+        android:id="@+id/nav_write_message"
+        android:name="kr.hnu.android_project1.WriteMessageFragment"
         android:label="메시지 작성"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_write_message" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="kr.hnu.android_project1.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_receive_message"
+        android:name="kr.hnu.android_project1.ReceiveMessageFragment"
         android:label="받은 메시지 함"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_receive_message" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="kr.hnu.android_project1.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_info_setting"
+        android:name="kr.hnu.android_project1.InfoSettingFragment"
         android:label="개인 정보 설정"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_info_setting" />
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="kr.hnu.android_project1.LogoutFragment"
+        android:label="개인 정보 설정"
+        tools:layout="@layout/fragment_logout" />
 </navigation>

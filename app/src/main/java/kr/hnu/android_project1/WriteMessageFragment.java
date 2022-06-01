@@ -1,22 +1,19 @@
-package kr.hnu.android_project1.ui.home;
+package kr.hnu.android_project1;
 
 import static kr.hnu.android_project1.MainActivity.loginID;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,23 +27,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import kr.hnu.android_project1.R;
-import kr.hnu.android_project1.SendMessageRequest;
-import kr.hnu.android_project1.UserInfoSettingRequest;
-import kr.hnu.android_project1.databinding.FragmentHomeBinding;
+import kr.hnu.android_project1.databinding.FragmentWriteMessageBinding;
 
-public class HomeFragment extends Fragment {
-    // 메시지 작성
-    private FragmentHomeBinding binding;
+public class WriteMessageFragment extends Fragment {
+    private FragmentWriteMessageBinding binding;
     private Button btn_cancel, btn_send;
     private EditText et_receiver, et_title, et_content;
-    private AlertDialog dialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_write_message, container, false);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentWriteMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         btn_cancel = binding.writeBtnCancel;
         btn_send = binding.writeBtnSend;
@@ -59,8 +51,7 @@ public class HomeFragment extends Fragment {
                 et_receiver.setText("");
                 et_title.setText("");
                 et_content.setText("");
-                Toast.makeText(getActivity(), "메시지 전송이 취소되었습니다.",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "메시지 전송이 취소되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
         btn_send.setOnClickListener(new View.OnClickListener() { // 보내기 버튼
@@ -79,10 +70,7 @@ public class HomeFragment extends Fragment {
                 String str_date = temp.format(date);
 
                 if ( str_receiver.equals("") | str_title.equals("") | str_content.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    dialog = builder.setMessage("Field is empty.").setNegativeButton("Retry", null).create();
-                    dialog.show();
-                    return;
+                    Toast.makeText(getActivity(), "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -91,16 +79,12 @@ public class HomeFragment extends Fragment {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean isSuccess = jsonResponse.getBoolean("success");
                             if (isSuccess) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                dialog = builder.setMessage("메시지를 보냈습니다.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                }).create();
-                                dialog.show();
+                                Toast.makeText(getActivity(), "메시지를 성공적으로 보냈습니다.", Toast.LENGTH_SHORT).show();
+                                et_receiver.setText("");
+                                et_title.setText("");
+                                et_content.setText("");
                             } else {
-                                Log.e("SendMessageFragment", response);
+                                Log.e("WriteMessageFragment", response);
                             }
                         } catch (JSONException e) {
                             Log.e("anyText",response);
@@ -108,9 +92,9 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 };
-                SendMessageRequest sendMessageRequest = new SendMessageRequest(loginID, str_receiver, str_title, str_content, str_date, responseListener);
+                WriteMessageRequest writeMessageRequest = new WriteMessageRequest(loginID, str_receiver, str_title, str_content, str_date, responseListener);
                 RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                requestQueue.add(sendMessageRequest);
+                requestQueue.add(writeMessageRequest);
             }
         });
         return root;

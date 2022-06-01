@@ -9,10 +9,10 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SendMessageRequest extends StringRequest {
-    final static private String URL = "http://highero10.dothome.co.kr/AndroidProject/SendMessage.php";
+public class WriteMessageRequest extends StringRequest {
+    final static private String URL = "http://highero10.dothome.co.kr/AndroidProject/WriteMessage.php";
     private Map<String, String> parameters;
-    public SendMessageRequest(String sender, String receiver, String title, String content, String sendDate, Response.Listener<String> listener) {
+    public WriteMessageRequest(String sender, String receiver, String title, String content, String sendDate, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {

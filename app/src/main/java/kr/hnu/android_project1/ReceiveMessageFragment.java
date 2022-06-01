@@ -1,22 +1,20 @@
-package kr.hnu.android_project1.ui.gallery;
+package kr.hnu.android_project1;
 
 import static kr.hnu.android_project1.MainActivity.loginID;
 
 import android.app.AlertDialog;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,18 +26,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import kr.hnu.android_project1.Messages;
-import kr.hnu.android_project1.MyRecyclerViewAdapter;
-import kr.hnu.android_project1.databinding.FragmentGalleryBinding;
+import kr.hnu.android_project1.databinding.FragmentReceiveMessageBinding;
 
-public class GalleryFragment extends Fragment {
-    // 받은 메시지 함
-    private FragmentGalleryBinding binding;
+public class ReceiveMessageFragment extends Fragment {
+    private FragmentReceiveMessageBinding binding;
     ArrayList<Messages> messageList;
     MyRecyclerViewAdapter adapter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentReceiveMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = binding.receiveRecycler;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -47,7 +42,7 @@ public class GalleryFragment extends Fragment {
         messageList = new ArrayList<>();
         adapter = new MyRecyclerViewAdapter(messageList);
         recyclerView.setAdapter(adapter);
-        new BackgroundTask().execute();
+        new ReceiveMessageFragment.BackgroundTask().execute();
 
         return root;
     }
@@ -103,7 +98,7 @@ public class GalleryFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 if (jsonArray.length() == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(GalleryFragment.this.getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ReceiveMessageFragment.this.getContext());
                     builder.setMessage("받은 메시지가 없습니다.").setNegativeButton("확인", null).create().show();
                 }
             } catch (Exception e) {

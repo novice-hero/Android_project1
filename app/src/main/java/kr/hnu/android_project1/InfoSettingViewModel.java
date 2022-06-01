@@ -1,13 +1,12 @@
-package kr.hnu.android_project1.ui.slideshow;
+package kr.hnu.android_project1;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
-    // 개인 정보 설정
+public class InfoSettingViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
-    public SlideshowViewModel() {
+    public InfoSettingViewModel() {
         mText = new MutableLiveData<>();
     }
     public LiveData<String> getText() {
