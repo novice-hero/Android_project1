@@ -1,5 +1,8 @@
 package kr.hnu.android_project1;
 
+import static kr.hnu.android_project1.ReceiveMessageFragment.RMF_CHECK;
+import static kr.hnu.android_project1.SendMessageFragment.SMF_CHECK;
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,15 +56,23 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     String content = arrayList.get(getAdapterPosition()).getContent();
                     String sendDate = arrayList.get(getAdapterPosition()).getSendDate();
 
-                    // 인텐트로 각 정보를 저장해서 MessageActivity로 보내고
-                    Intent intent = new Intent(v.getContext(), MessageActivity.class);
-                    intent.putExtra("sender",sender);
-                    intent.putExtra("receiver",receiver);
-                    intent.putExtra("title",title);
-                    intent.putExtra("content",content);
-                    intent.putExtra("sendDate",sendDate);
-                    // MessageActivity 열기
-                    v.getContext().startActivity(intent);
+                    if (SMF_CHECK) {
+                        Intent sendIntent = new Intent(v.getContext(), SendMessageActivity.class);
+                        sendIntent.putExtra("sender",sender);
+                        sendIntent.putExtra("receiver",receiver);
+                        sendIntent.putExtra("title",title);
+                        sendIntent.putExtra("content",content);
+                        sendIntent.putExtra("sendDate",sendDate);
+                        v.getContext().startActivity(sendIntent);
+                    } else if (RMF_CHECK) {
+                        Intent receiveIntent = new Intent(v.getContext(), ReceiveMessageActivity.class);
+                        receiveIntent.putExtra("sender",sender);
+                        receiveIntent.putExtra("receiver",receiver);
+                        receiveIntent.putExtra("title",title);
+                        receiveIntent.putExtra("content",content);
+                        receiveIntent.putExtra("sendDate",sendDate);
+                        v.getContext().startActivity(receiveIntent);
+                    }
                 }
             });
         }

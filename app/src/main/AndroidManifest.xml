@@ -18,7 +18,10 @@
             android:label="@string/title_activity_nav"
             android:theme="@style/Theme.Android_project1.NoActionBar" />
         <activity
-            android:name=".MessageActivity"
+            android:name=".SendMessageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReceiveMessageActivity"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"

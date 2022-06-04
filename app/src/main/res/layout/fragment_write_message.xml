@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    android:id="@+id/write_layout"
+    tools:context=".WriteMessageFragment">
     <Button
         android:id="@+id/write_btn_cancel"
         android:layout_width="160dp"

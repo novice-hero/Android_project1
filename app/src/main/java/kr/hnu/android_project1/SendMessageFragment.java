@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,16 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -32,23 +27,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
-import kr.hnu.android_project1.databinding.FragmentReceiveMessageBinding;
 import kr.hnu.android_project1.databinding.FragmentSendMessageBinding;
-import kr.hnu.android_project1.databinding.FragmentWriteMessageBinding;
 
 public class SendMessageFragment extends Fragment {
     private FragmentSendMessageBinding binding;
+    public static boolean SMF_CHECK;
     ArrayList<Messages> messageList;
     MyRecyclerViewAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        SMF_CHECK = true;
+
         binding = FragmentSendMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = binding.receiveRecycler;
@@ -58,6 +50,7 @@ public class SendMessageFragment extends Fragment {
         adapter = new MyRecyclerViewAdapter(messageList);
         recyclerView.setAdapter(adapter);
         new SendMessageFragment.BackgroundTask().execute();
+        adapter.notifyDataSetChanged();
 
         return root;
     }
@@ -113,8 +106,7 @@ public class SendMessageFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 if (jsonArray.length() == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SendMessageFragment.this.getContext());
-                    builder.setMessage("받은 메시지가 없습니다.").setNegativeButton("확인", null).create().show();
+                    Toast.makeText(getContext(), "받은 메시지가 없습니다.", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 Log.e("Error: ", s);
@@ -125,6 +117,7 @@ public class SendMessageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        SMF_CHECK = false;
         binding = null;
     }
 }

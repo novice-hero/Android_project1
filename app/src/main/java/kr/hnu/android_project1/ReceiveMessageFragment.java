@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,10 +31,13 @@ import kr.hnu.android_project1.databinding.FragmentReceiveMessageBinding;
 
 public class ReceiveMessageFragment extends Fragment {
     private FragmentReceiveMessageBinding binding;
+    public static boolean RMF_CHECK;
     ArrayList<Messages> messageList;
     MyRecyclerViewAdapter adapter;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        RMF_CHECK = true;
         binding = FragmentReceiveMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = binding.receiveRecycler;
@@ -98,8 +102,7 @@ public class ReceiveMessageFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 if (jsonArray.length() == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ReceiveMessageFragment.this.getContext());
-                    builder.setMessage("받은 메시지가 없습니다.").setNegativeButton("확인", null).create().show();
+                    Toast.makeText(getContext(), "받은 메시지가 없습니다.", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 Log.e("Error: ", s);
@@ -110,6 +113,7 @@ public class ReceiveMessageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        RMF_CHECK = false;
         binding = null;
     }
 }
