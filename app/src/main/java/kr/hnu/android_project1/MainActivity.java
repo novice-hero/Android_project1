@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
+    // 로그인 화면
     private AlertDialog dialog;
     private EditText editID, editPW;
     public static String loginID;

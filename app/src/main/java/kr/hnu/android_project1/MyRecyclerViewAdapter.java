@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
+    // 리사이클러뷰 어댑터
     ArrayList<Messages> arrayList;
     public MyRecyclerViewAdapter(ArrayList<Messages> arrayList) {
         this.arrayList = arrayList;

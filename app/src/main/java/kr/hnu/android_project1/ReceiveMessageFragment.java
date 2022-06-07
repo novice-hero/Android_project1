@@ -2,7 +2,6 @@ package kr.hnu.android_project1;
 
 import static kr.hnu.android_project1.MainActivity.loginID;
 
-import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import kr.hnu.android_project1.databinding.FragmentReceiveMessageBinding;
 
 public class ReceiveMessageFragment extends Fragment {
+    // 받은 메시지 프래그먼트
     private FragmentReceiveMessageBinding binding;
     public static boolean RMF_CHECK;
     ArrayList<Messages> messageList;

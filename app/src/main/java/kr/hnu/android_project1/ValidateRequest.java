@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ValidateRequest extends StringRequest {
+    // 사용자 유효성 검사 리퀘스트
     final static private String URL = "http://highero10.dothome.co.kr/AndroidProject/ValidateUser.php";
     private Map<String, String> parameters;
     public ValidateRequest(String userID, Response.Listener<String> listener) {

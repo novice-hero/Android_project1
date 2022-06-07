@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import kr.hnu.android_project1.databinding.FragmentInfoSettingBinding;
 
 public class InfoSettingFragment extends Fragment {
+    // 개인 정보 설정 프래그먼트
     private FragmentInfoSettingBinding binding;
     private TextView tv_name;
     private EditText et_pw, et_name;

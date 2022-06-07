@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WriteMessageRequest extends StringRequest {
+    // 메시지 작성 리퀘스트
     final static private String URL = "http://highero10.dothome.co.kr/AndroidProject/WriteMessage.php";
     private Map<String, String> parameters;
     public WriteMessageRequest(String sender, String receiver, String title, String content, String sendDate, Response.Listener<String> listener) {

@@ -1,6 +1,7 @@
 package kr.hnu.android_project1;
 
 public class Messages {
+    // 메시지 클래스
     String sender;
     String receiver;
     String title;

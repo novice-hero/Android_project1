@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SendMessageActivity extends AppCompatActivity {
-    // 받은 메시지를 눌렀을 때 나오는 화면
+    // 보낸 메시지를 눌렀을 때 나오는 화면
     Button btnBack_send, btnDelete_send;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

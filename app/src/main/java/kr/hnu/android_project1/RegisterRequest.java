@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
+    // 사용자 등록 리퀘스트
     final static private String URL = "http://highero10.dothome.co.kr/AndroidProject/UserRegister.php";
     private Map<String, String> parameters;
     public RegisterRequest(String userID, String userPassword, String userName, String userDepartment, Response.Listener<String> listener) {

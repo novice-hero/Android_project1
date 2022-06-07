@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserInfoSettingRequest extends StringRequest {
+    // 개인 정보 설정 리퀘스트
     final static private String URL = "http://highero10.dothome.co.kr/AndroidProject/UserInfoSetting.php";
     private Map<String, String> parameters;
     public UserInfoSettingRequest(String userPassword, String userName, String userDepartment, String userID, Response.Listener<String> listener) {

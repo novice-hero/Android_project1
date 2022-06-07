@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ReceiveDeleteRequest extends StringRequest {
+    // 받은 메시지 삭제 리퀘스트
     final static private String URL = "http://highero10.dothome.co.kr/AndroidProject/DeleteReceiveMessage.php";
     private Map<String, String> parameters;
     public ReceiveDeleteRequest(String receiver, String sendDate, Response.Listener<String> listener) {

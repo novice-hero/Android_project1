@@ -30,6 +30,7 @@ import java.util.TimeZone;
 import kr.hnu.android_project1.databinding.FragmentWriteMessageBinding;
 
 public class WriteMessageFragment extends Fragment {
+    // 메시지 작성 프래그먼트
     private FragmentWriteMessageBinding binding;
     private Button btn_cancel, btn_send;
     private EditText et_receiver, et_title, et_content;

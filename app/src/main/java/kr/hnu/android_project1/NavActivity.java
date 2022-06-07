@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import kr.hnu.android_project1.databinding.ActivityNavBinding;
 
 public class NavActivity extends AppCompatActivity {
-
+    // 내비게이션 드로어
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavBinding binding;
 

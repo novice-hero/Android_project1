@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import kr.hnu.android_project1.databinding.FragmentSendMessageBinding;
 
 public class SendMessageFragment extends Fragment {
+    // 보낸 메시지 프래그먼트
     private FragmentSendMessageBinding binding;
     public static boolean SMF_CHECK;
     ArrayList<Messages> messageList;

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class InfoSettingViewModel extends ViewModel {
+    // 개인 정보 설정 뷰모델
     private final MutableLiveData<String> mText;
     public InfoSettingViewModel() {
         mText = new MutableLiveData<>();

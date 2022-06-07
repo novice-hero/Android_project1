@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SignUpActivity extends AppCompatActivity {
+    // 사용자 등록 화면
     private EditText editId, editPw, editName;
     private Button buttonCheck;
     private Spinner spinner;
