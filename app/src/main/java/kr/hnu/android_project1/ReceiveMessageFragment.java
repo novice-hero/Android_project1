@@ -54,7 +54,7 @@ public class ReceiveMessageFragment extends Fragment {
         String target;
         @Override
         protected String doInBackground(Void... voids) {
-            try {
+            try { // url을 열어서 json을 stringbuilder에 전부 추가
                 URL url = new URL(target);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = httpURLConnection.getInputStream();

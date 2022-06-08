@@ -107,7 +107,7 @@ public class SendMessageFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
                 if (jsonArray.length() == 0) {
-                    Toast.makeText(getContext(), "받은 메시지가 없습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "보낸 메시지가 없습니다.", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 Log.e("Error: ", s);

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     boolean isSuccess = jsonResponse.getBoolean("success");
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     if (isSuccess) {
-                        loginID = editID.getText().toString();
+                        loginID = editID.getText().toString(); // 로그인한 유저 아이디 저장
                         Intent intentRegister = new Intent(MainActivity.this, NavActivity.class);
                         startActivity(intentRegister);
                         finish();

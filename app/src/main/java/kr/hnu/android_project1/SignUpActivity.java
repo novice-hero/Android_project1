@@ -3,11 +3,7 @@ package kr.hnu.android_project1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -42,7 +37,8 @@ public class SignUpActivity extends AppCompatActivity {
         editName = findViewById(R.id.signup_inputName);
         buttonCheck = findViewById(R.id.signup_btn_check);
         spinner = findViewById(R.id.signup_department);
-
+        
+        // 스피너 세팅
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.department_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -56,10 +52,11 @@ public class SignUpActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
-
+    
+    // 중복 체크
     public void onClickCheck(View v) {
         String userID = editId.getText().toString();
-        if (userID.equals("")) {
+        if (userID.equals("")) { // 아이디가 비어있다면
             AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
             dialog = builder.setMessage("ID is empty.").setNegativeButton("Retry", null).create();
             dialog.show();
@@ -69,10 +66,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean isSuccess = jsonResponse.getBoolean("success");
+                    JSONObject jsonResponse = new JSONObject(response); // jsonobject로 인코딩 풀어줌
+                    boolean isSuccess = jsonResponse.getBoolean("success"); // success라는 키값에 대한 값을 저장
                     AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-                    if (isSuccess) {
+                    if (isSuccess) { // true (아이디가 중복되지 않았다면)
                         dialog = builder.setMessage("Good ID").setPositiveButton("OK", null).create();
                         dialog.show();
                         editId.setEnabled(false);
@@ -87,12 +84,14 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         };
+        // 아이디가 있다면 리퀘스트를 php로 보내고 volley에 리퀘스트를 추가해줌
         ValidateRequest validateRequest = new ValidateRequest(userID, responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
         requestQueue.add(validateRequest);
     }
+    // 등록
     public void onClickRegister(View v) {
-        if (!validate) {
+        if (!validate) { // 중복 체크가 안되었다면
             AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
             dialog = builder.setMessage("Press Check").setNegativeButton("Retry", null).create();
             dialog.show();
@@ -117,7 +116,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (isSuccess) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                         dialog = builder.setMessage("Created.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
+                            @Override // ok 버튼을 누르면 로그인 화면으로 돌아감
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                                 finish();
@@ -132,6 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         };
+        // 유저 정보를 담아서 php로 보냄
         RegisterRequest registerRequest = new RegisterRequest(userID, userPassword, userName, userDepartment, responseListener);
         RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
         requestQueue.add(registerRequest);

@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,7 +27,6 @@ public class ReceiveMessageActivity extends AppCompatActivity {
         btnBack_receive = findViewById(R.id.receive_btn_back);
         btnDelete_receive = findViewById(R.id.receive_btn_delete);
         btnReply_receive = findViewById(R.id.receive_btn_reply);
-        Fragment fragment_write = new WriteMessageFragment();
 
         Intent intent = getIntent(); // 인텐트를 받아서 정보를 각각 저장
 
@@ -80,16 +78,6 @@ public class ReceiveMessageActivity extends AppCompatActivity {
                 ReceiveDeleteRequest receiveDeleteRequest = new ReceiveDeleteRequest(tv_receiver.getText().toString(), tv_date.getText().toString(), responseListener);
                 RequestQueue requestQueue = Volley.newRequestQueue(v.getContext());
                 requestQueue.add(receiveDeleteRequest);
-            }
-        });
-        btnReply_receive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.write_layout, WriteMessageFragment.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("name")
-                        .commit();
             }
         });
     }
